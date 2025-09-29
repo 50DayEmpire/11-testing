@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import Counter from "./Counter";
 import userEvent from "@testing-library/user-event";
-import { expect } from "vitest";
+import { expect, it } from "vitest";
 
 describe("Probar el componente <Counter/>", () => {
   it("Prueba: el titulo y estado se renderizan correctamente", () => {
@@ -51,5 +51,24 @@ describe("Probar el componente <Counter/>", () => {
     await userEvent.click(btnAum);
     await userEvent.click(btnAum);
     expect(screen.getByRole("counter").textContent).toContain("Counter: 1");
+  });
+  it("Click en Reset vuelve a 0", async () => {
+    render(<Counter />);
+    const btnAum = screen.getByText("+1");
+    const btnDis = screen.getByLabelText("disminuir");
+    const btnReset = screen.getByText("Reset");
+    await userEvent.click(btnAum);
+    await userEvent.click(btnAum);
+    await userEvent.click(btnAum);
+    expect(screen.getByRole("counter").textContent).toContain("Counter: 3");
+    await userEvent.click(btnReset);
+    expect(screen.getByRole("counter").textContent).toContain("Counter: 0");
+    await userEvent.click(btnReset);
+    expect(screen.getByRole("counter").textContent).toContain("Counter: 0");
+    await userEvent.click(btnDis);
+    await userEvent.click(btnDis);
+    expect(screen.getByRole("counter").textContent).toContain("Counter: -2");
+    await userEvent.click(btnReset);
+    expect(screen.getByRole("counter").textContent).toContain("Counter: 0");
   });
 });

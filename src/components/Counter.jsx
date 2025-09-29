@@ -1,18 +1,15 @@
-import React, { useState } from "react";
+import { useCounter } from "../hooks/useCounter";
+import ButtonCounter from "./ButtonCounter";
 
 const Counter = () => {
-  const [contador, setcontador] = useState(0);
+  const { contador, handleCambio } = useCounter();
 
   return (
     <>
       <h2 role="counter">Counter: {contador}</h2>
-      <button onClick={() => setcontador((actual) => actual + 1)}>+1</button>
-      <button
-        aria-label="disminuir"
-        onClick={() => setcontador((actual) => actual - 1)}
-      >
-        -1
-      </button>
+      <ButtonCounter value={1} action={() => handleCambio(1)} />
+      <ButtonCounter value={0} action={() => handleCambio(0)} />
+      <ButtonCounter value={-1} action={() => handleCambio(-1)} />
     </>
   );
 };
