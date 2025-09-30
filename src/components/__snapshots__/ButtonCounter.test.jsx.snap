@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`<ButtonCounter /> > Snapshot de todas las pruebas 1`] = `
+<button>
+  +1
+</button>
+`;

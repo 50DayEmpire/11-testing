@@ -4,26 +4,28 @@ import userEvent from "@testing-library/user-event";
 import { expect, it } from "vitest";
 
 describe("Probar el componente <Counter/>", () => {
-  it("Prueba: el titulo y estado se renderizan correctamente", () => {
+  beforeEach(() => {
     render(<Counter />);
+  });
 
+  it("Primer Snapshots", () => {
+    expect(screen.getByRole("counter")).toMatchSnapshot();
+  });
+
+  it("Prueba: el titulo y estado se renderizan correctamente", () => {
     //Actual
     expect(screen.getByText("Counter: 0").tagName).toBe("H2");
   });
 
   it("Click en +1 aumenta correctamente", () => {
-    render(<Counter />);
     fireEvent.click(screen.getByText("+1"));
     expect(screen.getByRole("counter").textContent).toContain("Counter: 1");
   });
   it("Click en -1 disminuye correctamente", async () => {
-    render(<Counter />);
     await userEvent.click(screen.getByLabelText("disminuir"));
     expect(screen.getByRole("counter").textContent).toContain("Counter: -1");
   });
   it("Simular comportamiento de usuario", async () => {
-    render(<Counter />);
-
     const btnAum = screen.getByText("+1");
     const btnDis = screen.getByLabelText("disminuir");
 
@@ -53,7 +55,6 @@ describe("Probar el componente <Counter/>", () => {
     expect(screen.getByRole("counter").textContent).toContain("Counter: 1");
   });
   it("Click en Reset vuelve a 0", async () => {
-    render(<Counter />);
     const btnAum = screen.getByText("+1");
     const btnDis = screen.getByLabelText("disminuir");
     const btnReset = screen.getByText("Reset");
